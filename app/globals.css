@@ -56,3 +56,109 @@ body {
   margin: 0 auto;
   padding: 1.5rem;
 }
+
+h1 {
+  color: var(--vert);
+}
+
+.formulaire {
+  background: white;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.formulaire h2 {
+  margin: 0;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.champ label {
+  font-weight: 600;
+}
+
+.champ input,
+.champ select {
+  padding: 0.6rem;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.erreur {
+  color: var(--erreur);
+  font-size: 0.875rem;
+}
+
+.message-erreur {
+  margin: 0;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background: #fdecea;
+  color: var(--erreur);
+}
+
+.message-succes {
+  margin: 0;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background: var(--vert-clair);
+  color: var(--vert);
+}
+
+.bouton {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--vert);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.bouton:hover {
+  opacity: 0.9;
+}
+
+.bouton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.grille {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.carte {
+  background: white;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.carte h3 {
+  margin: 0 0 0.5rem;
+  color: var(--vert);
+}
+
+.carte p {
+  margin: 0.25rem 0;
+}
+
+.vide {
+  color: #6b7280;
+  font-style: italic;
+}
