@@ -1,26 +1,58 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --vert: #2f6f3e;
+  --vert-clair: #e8f3ea;
+  --texte: #1f2933;
+  --bordure: #d5dbe1;
+  --erreur: #b42318;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  color: var(--texte);
+  background: #f7f9f7;
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--vert);
+  color: white;
+}
+
+.navbar-titre {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navbar-liens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-liens a {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-liens a:hover {
+  text-decoration: underline;
+}
+
+.contenu {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
 }
