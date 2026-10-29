@@ -177,3 +177,29 @@ h1 {
 .sous-liste li {
   margin: 0.2rem 0;
 }
+
+.cases {
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.cases legend {
+  font-weight: 600;
+  padding: 0 0.25rem;
+}
+
+.case {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: normal;
+}
+
+.sous-liste .cases {
+  margin-bottom: 0.75rem;
+}
