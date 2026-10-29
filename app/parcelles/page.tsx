@@ -3,7 +3,8 @@ import { createParcelle } from "./actions";
 
 export default async function page() {
   const parcelles = await prisma.parcelle.findMany({
-    orderBy: { id: "desc" },
+  orderBy: { id: "desc" },
+  include: { capteur: true },
   });
 
   return (
@@ -40,6 +41,7 @@ export default async function page() {
           <input id="localisation" name="localisation" type="text" required />
         </div>
 
+
         <button type="submit" className="bouton">
           Ajouter la parcelle
         </button>
@@ -57,6 +59,9 @@ export default async function page() {
               <p><strong>Superficie :</strong> {parcelle.superficie} ha</p>
               <p><strong>Type de sol :</strong> {parcelle.typeSol}</p>
               <p><strong>Localisation :</strong> {parcelle.localisation}</p>
+              <p><strong>Capteur :</strong>{" "} {parcelle.capteur ? parcelle.capteur.code : "Aucun capteur"}</p>
+              {parcelle.capteur && (
+              <p>{parcelle.capteur.humidite} % • {parcelle.capteur.temperature} °C</p>)}
             </li>
           ))}
         </ul>
