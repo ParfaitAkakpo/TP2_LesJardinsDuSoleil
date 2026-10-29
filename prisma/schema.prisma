@@ -14,16 +14,39 @@ datasource db {
 
 
 model Parcelle {
-  id           Int    @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   nom          String
   superficie   Float
   typeSol      String
   localisation String
+  capteur      Capteur?
+  cultures     Culture[]
+}
+
+model Capteur {
+  id          Int      @id @default(autoincrement())
+  code        String
+  humidite    Float
+  temperature Float
+  parcelleId  Int      @unique
+  parcelle    Parcelle @relation(fields: [parcelleId], references: [id])
+}
+
+model Culture {
+  id                Int       @id @default(autoincrement())
+  nom               String
+  dateSemis         DateTime
+  dateRecoltePrevue DateTime
+  statut            String
+  parcelleId        Int
+  parcelle          Parcelle  @relation(fields: [parcelleId], references: [id])
+  employes          Employe[]
 }
 
 model Employe {
-  id         Int    @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   nom        String
   prenom     String
   specialite String
+  cultures   Culture[]
 }
