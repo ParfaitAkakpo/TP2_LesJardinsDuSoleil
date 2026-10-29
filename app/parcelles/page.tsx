@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
+import { formaterDate } from "@/lib/dates";
 import { createParcelle } from "./actions";
 
-export default async function page() {
+export default async function ParcellesPage() {
   const parcelles = await prisma.parcelle.findMany({
-  orderBy: { id: "desc" },
-  include: { capteur: true },
+    orderBy: { id: "desc" },
+    include: { capteur: true, cultures: true },
   });
 
   return (
@@ -41,7 +42,6 @@ export default async function page() {
           <input id="localisation" name="localisation" type="text" required />
         </div>
 
-
         <button type="submit" className="bouton">
           Ajouter la parcelle
         </button>
@@ -59,9 +59,32 @@ export default async function page() {
               <p><strong>Superficie :</strong> {parcelle.superficie} ha</p>
               <p><strong>Type de sol :</strong> {parcelle.typeSol}</p>
               <p><strong>Localisation :</strong> {parcelle.localisation}</p>
-              <p><strong>Capteur :</strong>{" "} {parcelle.capteur ? parcelle.capteur.code : "Aucun capteur"}</p>
+              <p>
+                <strong>Capteur :</strong>{" "}
+                {parcelle.capteur ? parcelle.capteur.code : "Aucun capteur"}
+              </p>
               {parcelle.capteur && (
-              <p>{parcelle.capteur.humidite} % • {parcelle.capteur.temperature} °C</p>)}
+                <p>
+                  {parcelle.capteur.humidite} % •{" "}
+                  {parcelle.capteur.temperature} °C
+                </p>
+              )}
+
+              <div className="sous-liste">
+                <strong>Cultures ({parcelle.cultures.length}) :</strong>
+                {parcelle.cultures.length === 0 ? (
+                  <p className="vide">Aucune culture</p>
+                ) : (
+                  <ul>
+                    {parcelle.cultures.map((culture) => (
+                      <li key={culture.id}>
+                        {culture.nom} ({culture.statut}), récolte le{" "}
+                        {formaterDate(culture.dateRecoltePrevue)}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </li>
           ))}
         </ul>
