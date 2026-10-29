@@ -1,9 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { createEmploye } from "./actions";
 
-export default async function page() {
+export default async function EmployesPage() {
   const employes = await prisma.employe.findMany({
     orderBy: { id: "desc" },
+    include: {
+      cultures: {
+        include: { parcelle: true },
+      },
+    },
   });
 
   return (
@@ -53,6 +58,21 @@ export default async function page() {
               <p>
                 <strong>Spécialité :</strong> {employe.specialite}
               </p>
+
+              <div className="sous-liste">
+                <strong>Cultures ({employe.cultures.length}) :</strong>
+                {employe.cultures.length === 0 ? (
+                  <p className="vide">Aucune culture</p>
+                ) : (
+                  <ul>
+                    {employe.cultures.map((culture) => (
+                      <li key={culture.id}>
+                        {culture.nom} ({culture.parcelle.nom}), {culture.statut}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </li>
           ))}
         </ul>
