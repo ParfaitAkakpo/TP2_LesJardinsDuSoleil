@@ -1,7 +1,20 @@
 import { prisma } from "@/lib/prisma";
 import { createEmploye } from "./actions";
 
-export default async function EmployesPage() {
+export const instant = false;
+
+const MESSAGES_ERREUR: Record<string, string> = {
+  champs: "Veuillez remplir le prénom, le nom et la spécialité.",
+  technique: "Impossible d'enregistrer l'employé. Veuillez réessayer.",
+};
+
+export default async function EmployesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ erreur?: string; succes?: string }>;
+}) {
+  const { erreur, succes } = await searchParams;
+
   const employes = await prisma.employe.findMany({
     orderBy: { id: "desc" },
     include: {
@@ -14,6 +27,12 @@ export default async function EmployesPage() {
   return (
     <div>
       <h1>Employés</h1>
+      {erreur && (
+        <p className="message-erreur">
+            {MESSAGES_ERREUR[erreur] ?? MESSAGES_ERREUR.technique}
+        </p>
+      )}
+      {succes && <p className="message-succes">L&apos;employé a été ajouté.</p>}
 
       <form action={createEmploye} className="formulaire">
         <h2>Ajouter un employé</h2>

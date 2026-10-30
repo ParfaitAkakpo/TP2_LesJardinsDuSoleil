@@ -2,7 +2,21 @@ import { prisma } from "@/lib/prisma";
 import { formaterDate } from "@/lib/dates";
 import { createParcelle } from "./actions";
 
-export default async function ParcellesPage() {
+export const instant = false;
+
+const MESSAGES_ERREUR: Record<string, string> = {
+  champs: "Veuillez remplir tous les champs obligatoires.",
+  superficie: "La superficie doit être un nombre supérieur à 0.",
+  technique: "Impossible d'enregistrer la parcelle. Veuillez réessayer.",
+};
+
+export default async function ParcellesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ erreur?: string; succes?: string }>;
+}) {
+  const { erreur, succes } = await searchParams;
+
   const parcelles = await prisma.parcelle.findMany({
     orderBy: { id: "desc" },
     include: { capteur: true, cultures: true },
@@ -11,6 +25,13 @@ export default async function ParcellesPage() {
   return (
     <div>
       <h1>Parcelles</h1>
+
+      {erreur && (
+        <p className="message-erreur">
+          {MESSAGES_ERREUR[erreur] ?? MESSAGES_ERREUR.technique}
+        </p>
+      )}
+      {succes && <p className="message-succes">La parcelle a été ajoutée.</p>}
 
       <form action={createParcelle} className="formulaire">
         <h2>Ajouter une parcelle</h2>
