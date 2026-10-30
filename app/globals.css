@@ -203,3 +203,28 @@ h1 {
 .sous-liste .cases {
   margin-bottom: 0.75rem;
 }
+
+.introduction {
+  max-width: 60ch;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.compteur {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--vert);
+}
+
+.lien-carte {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--vert);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lien-carte:hover {
+  text-decoration: underline;
+}
