@@ -42,3 +42,7 @@ yarn-error.log*
 next-env.d.ts
 
 /generated/prisma
+
+# base SQLite locale (recréée avec prisma migrate + prisma db seed)
+*.db
+*.db-journal
