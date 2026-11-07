@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+import Navigation from "./components/Navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,16 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body>
-        <nav className="navbar">
-          <span className="navbar-titre">🌱 Les Jardins du Soleil</span>
-          <ul className="navbar-liens">
-            <li><Link href="/">Accueil</Link></li>
-            <li><Link href="/parcelles">Parcelles</Link></li>
-            <li><Link href="/cultures">Cultures</Link></li>
-            <li><Link href="/employes">Employés</Link></li>
-            <li><Link href="/capteurs">Capteurs</Link></li>
-          </ul>
-        </nav>
+        <Navigation />
         <main className="contenu">{children}</main>
       </body>
     </html>
