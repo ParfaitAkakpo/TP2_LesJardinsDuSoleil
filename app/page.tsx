@@ -1,7 +1,14 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export const instant = false;
+
 export default async function AccueilPage() {
+  // Attendre une vraie requête : sinon Next.js calcule les compteurs
+  // une seule fois pendant le build et ils restent figés.
+  await connection();
+
   // Les quatre comptages sont lancés en parallèle
   const [nbParcelles, nbCultures, nbEmployes, nbCapteurs] = await Promise.all([
     prisma.parcelle.count(),
