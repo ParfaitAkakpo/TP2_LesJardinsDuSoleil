@@ -55,157 +55,161 @@ export default async function CulturesPage({
         <p className="message-succes">{MESSAGES_SUCCES[succes]}</p>
       )}
 
-      <form action={createCulture} className="formulaire">
-        <h2>Ajouter une culture</h2>
+      <div className="mise-en-page">
+        <form action={createCulture} className="formulaire">
+          <h2>Ajouter une culture</h2>
 
-        <div className="champ">
-          <label htmlFor="nom">Nom de la culture</label>
-          <input
-            id="nom"
-            name="nom"
-            type="text"
-            placeholder="Ex. : Tomates"
-            required
-          />
-        </div>
+          <div className="champ">
+            <label htmlFor="nom">Nom de la culture</label>
+            <input
+              id="nom"
+              name="nom"
+              type="text"
+              placeholder="Ex. : Tomates"
+              required
+            />
+          </div>
 
-        <div className="champ">
-          <label htmlFor="dateSemis">Date de semis</label>
-          <input id="dateSemis" name="dateSemis" type="date" required />
-        </div>
+          <div className="champ">
+            <label htmlFor="dateSemis">Date de semis</label>
+            <input id="dateSemis" name="dateSemis" type="date" required />
+          </div>
 
-        <div className="champ">
-          <label htmlFor="dateRecoltePrevue">Date de récolte prévue</label>
-          <input
-            id="dateRecoltePrevue"
-            name="dateRecoltePrevue"
-            type="date"
-            required
-          />
-        </div>
+          <div className="champ">
+            <label htmlFor="dateRecoltePrevue">Date de récolte prévue</label>
+            <input
+              id="dateRecoltePrevue"
+              name="dateRecoltePrevue"
+              type="date"
+              required
+            />
+          </div>
 
-        <div className="champ">
-          <label htmlFor="statut">Statut</label>
-          <select id="statut" name="statut" required defaultValue="">
-            <option value="" disabled>
-              Choisir un statut
-            </option>
-            {STATUTS.map((statut) => (
-              <option key={statut} value={statut}>
-                {statut}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="champ">
-          <label htmlFor="parcelleId">Parcelle</label>
-          {parcelles.length === 0 ? (
-            <p className="vide">
-              Aucune parcelle disponible. Créez d&apos;abord une parcelle.
-            </p>
-          ) : (
-            <select id="parcelleId" name="parcelleId" required defaultValue="">
+          <div className="champ">
+            <label htmlFor="statut">Statut</label>
+            <select id="statut" name="statut" required defaultValue="">
               <option value="" disabled>
-                Choisir une parcelle
+                Choisir un statut
               </option>
-              {parcelles.map((parcelle) => (
-                <option key={parcelle.id} value={parcelle.id}>
-                  {parcelle.nom} ({parcelle.localisation})
+              {STATUTS.map((statut) => (
+                <option key={statut} value={statut}>
+                  {statut}
                 </option>
               ))}
             </select>
-          )}
-        </div>
+          </div>
 
-        <fieldset className="cases">
-          <legend>Employés affectés (optionnel)</legend>
-          {employes.length === 0 ? (
-            <p className="vide">Aucun employé disponible.</p>
+          <div className="champ">
+            <label htmlFor="parcelleId">Parcelle</label>
+            {parcelles.length === 0 ? (
+              <p className="vide">
+                Aucune parcelle disponible. Créez d&apos;abord une parcelle.
+              </p>
+            ) : (
+              <select id="parcelleId" name="parcelleId" required defaultValue="">
+                <option value="" disabled>
+                  Choisir une parcelle
+                </option>
+                {parcelles.map((parcelle) => (
+                  <option key={parcelle.id} value={parcelle.id}>
+                    {parcelle.nom} ({parcelle.localisation})
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <fieldset className="cases">
+            <legend>Employés affectés (optionnel)</legend>
+            {employes.length === 0 ? (
+              <p className="vide">Aucun employé disponible.</p>
+            ) : (
+              employes.map((employe) => (
+                <label key={employe.id} className="case">
+                  <input type="checkbox" name="employeIds" value={employe.id} />
+                  {employe.prenom} {employe.nom} ({employe.specialite})
+                </label>
+              ))
+            )}
+          </fieldset>
+
+          <button
+            type="submit"
+            className="bouton"
+            disabled={parcelles.length === 0}
+          >
+            Ajouter la culture
+          </button>
+        </form>
+
+        <section className="zone-liste">
+          <h2>Liste des cultures ({cultures.length})</h2>
+
+          {cultures.length === 0 ? (
+            <p className="vide">Aucune culture pour le moment.</p>
           ) : (
-            employes.map((employe) => (
-              <label key={employe.id} className="case">
-                <input type="checkbox" name="employeIds" value={employe.id} />
-                {employe.prenom} {employe.nom} ({employe.specialite})
-              </label>
-            ))
+            <ul className="grille">
+              {cultures.map((culture) => {
+                // Employés pas encore affectés à CETTE culture
+                const employesDisponibles = employes.filter(
+                  (employe) =>
+                    !culture.employes.some((affecte) => affecte.id === employe.id),
+                );
+
+                return (
+                  <li key={culture.id} className="carte">
+                    <h3>{culture.nom}</h3>
+                    <p><strong>Parcelle :</strong> {culture.parcelle.nom}</p>
+                    <p><strong>Statut :</strong> {culture.statut}</p>
+                    <p><strong>Semis :</strong> {formaterDate(culture.dateSemis)}</p>
+                    <p>
+                      <strong>Récolte prévue :</strong>{" "}
+                      {formaterDate(culture.dateRecoltePrevue)}
+                    </p>
+
+                    <div className="sous-liste">
+                      <strong>Employés ({culture.employes.length}) :</strong>
+                      {culture.employes.length === 0 ? (
+                        <p className="vide">Aucun employé affecté</p>
+                      ) : (
+                        <ul>
+                          {culture.employes.map((employe) => (
+                            <li key={employe.id}>
+                              {employe.prenom} {employe.nom} ({employe.specialite})
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+                    {employesDisponibles.length > 0 && (
+                      <form action={affecterEmployes} className="sous-liste">
+                        <input type="hidden" name="cultureId" value={culture.id} />
+                        <fieldset className="cases">
+                          <legend>Affecter d&apos;autres employés</legend>
+                          {employesDisponibles.map((employe) => (
+                            <label key={employe.id} className="case">
+                              <input
+                                type="checkbox"
+                                name="employeIds"
+                                value={employe.id}
+                              />
+                              {employe.prenom} {employe.nom}
+                            </label>
+                          ))}
+                        </fieldset>
+                        <button type="submit" className="bouton">
+                          Affecter
+                        </button>
+                      </form>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           )}
-        </fieldset>
-
-        <button
-          type="submit"
-          className="bouton"
-          disabled={parcelles.length === 0}
-        >
-          Ajouter la culture
-        </button>
-      </form>
-
-      <h2>Liste des cultures ({cultures.length})</h2>
-
-      {cultures.length === 0 ? (
-        <p className="vide">Aucune culture pour le moment.</p>
-      ) : (
-        <ul className="grille">
-          {cultures.map((culture) => {
-            // Employés pas encore affectés à CETTE culture
-            const employesDisponibles = employes.filter(
-              (employe) =>
-                !culture.employes.some((affecte) => affecte.id === employe.id),
-            );
-
-            return (
-              <li key={culture.id} className="carte">
-                <h3>{culture.nom}</h3>
-                <p><strong>Parcelle :</strong> {culture.parcelle.nom}</p>
-                <p><strong>Statut :</strong> {culture.statut}</p>
-                <p><strong>Semis :</strong> {formaterDate(culture.dateSemis)}</p>
-                <p>
-                  <strong>Récolte prévue :</strong>{" "}
-                  {formaterDate(culture.dateRecoltePrevue)}
-                </p>
-
-                <div className="sous-liste">
-                  <strong>Employés ({culture.employes.length}) :</strong>
-                  {culture.employes.length === 0 ? (
-                    <p className="vide">Aucun employé affecté</p>
-                  ) : (
-                    <ul>
-                      {culture.employes.map((employe) => (
-                        <li key={employe.id}>
-                          {employe.prenom} {employe.nom} ({employe.specialite})
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-
-                {employesDisponibles.length > 0 && (
-                  <form action={affecterEmployes} className="sous-liste">
-                    <input type="hidden" name="cultureId" value={culture.id} />
-                    <fieldset className="cases">
-                      <legend>Affecter d&apos;autres employés</legend>
-                      {employesDisponibles.map((employe) => (
-                        <label key={employe.id} className="case">
-                          <input
-                            type="checkbox"
-                            name="employeIds"
-                            value={employe.id}
-                          />
-                          {employe.prenom} {employe.nom}
-                        </label>
-                      ))}
-                    </fieldset>
-                    <button type="submit" className="bouton">
-                      Affecter
-                    </button>
-                  </form>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      )}
+        </section>
+      </div>
     </div>
   );
 }

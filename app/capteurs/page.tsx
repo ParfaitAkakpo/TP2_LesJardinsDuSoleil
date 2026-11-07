@@ -41,84 +41,88 @@ export default async function CapteursPage({
       )}
       {succes && <p className="message-succes">Le capteur a été ajouté.</p>}
 
-      <form action={createCapteur} className="formulaire">
-        <h2>Ajouter un capteur</h2>
+      <div className="mise-en-page">
+        <form action={createCapteur} className="formulaire">
+          <h2>Ajouter un capteur</h2>
 
-        <div className="champ">
-          <label htmlFor="code">Code du capteur</label>
-          <input id="code" name="code" type="text" required />
-        </div>
+          <div className="champ">
+            <label htmlFor="code">Code du capteur</label>
+            <input id="code" name="code" type="text" required />
+          </div>
 
-        <div className="champ">
-          <label htmlFor="humidite">Humidité (%)</label>
-          <input
-            id="humidite"
-            name="humidite"
-            type="number"
-            step="0.1"
-            min="0"
-            max="100"
-            required
-          />
-        </div>
+          <div className="champ">
+            <label htmlFor="humidite">Humidité (%)</label>
+            <input
+              id="humidite"
+              name="humidite"
+              type="number"
+              step="0.1"
+              min="0"
+              max="100"
+              required
+            />
+          </div>
 
-        <div className="champ">
-          <label htmlFor="temperature">Température (°C)</label>
-          <input
-            id="temperature"
-            name="temperature"
-            type="number"
-            step="0.1"
-            required
-          />
-        </div>
+          <div className="champ">
+            <label htmlFor="temperature">Température (°C)</label>
+            <input
+              id="temperature"
+              name="temperature"
+              type="number"
+              step="0.1"
+              required
+            />
+          </div>
 
-        <div className="champ">
-          <label htmlFor="parcelleId">Parcelle</label>
-          {parcellesLibres.length === 0 ? (
-            <p className="vide">
-              Aucune parcelle disponible : toutes ont déjà un capteur, ou
-              aucune parcelle n&apos;existe.
-            </p>
-          ) : (
-            <select id="parcelleId" name="parcelleId" required defaultValue="">
-              <option value="" disabled>
-                Choisir une parcelle
-              </option>
-              {parcellesLibres.map((parcelle) => (
-                <option key={parcelle.id} value={parcelle.id}>
-                  {parcelle.nom} ({parcelle.localisation})
+          <div className="champ">
+            <label htmlFor="parcelleId">Parcelle</label>
+            {parcellesLibres.length === 0 ? (
+              <p className="vide">
+                Aucune parcelle disponible : toutes ont déjà un capteur, ou
+                aucune parcelle n&apos;existe.
+              </p>
+            ) : (
+              <select id="parcelleId" name="parcelleId" required defaultValue="">
+                <option value="" disabled>
+                  Choisir une parcelle
                 </option>
+                {parcellesLibres.map((parcelle) => (
+                  <option key={parcelle.id} value={parcelle.id}>
+                    {parcelle.nom} ({parcelle.localisation})
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="bouton"
+            disabled={parcellesLibres.length === 0}
+          >
+            Ajouter le capteur
+          </button>
+        </form>
+
+        <section className="zone-liste">
+          <h2>Liste des capteurs ({capteurs.length})</h2>
+
+          {capteurs.length === 0 ? (
+            <p className="vide">Aucun capteur pour le moment.</p>
+          ) : (
+            <ul className="grille">
+              {capteurs.map((capteur) => (
+                <li key={capteur.id} className="carte">
+                  <h3>{capteur.code}</h3>
+                  <p><strong>Parcelle :</strong> {capteur.parcelle.nom}</p>
+                  <p><strong>Humidité :</strong> {capteur.humidite} %</p>
+                  <p><strong>Température :</strong> {capteur.temperature} °C</p>
+                </li>
               ))}
-            </select>
+            </ul>
           )}
-        </div>
-
-        <button
-          type="submit"
-          className="bouton"
-          disabled={parcellesLibres.length === 0}
-        >
-          Ajouter le capteur
-        </button>
-      </form>
-
-      <h2>Liste des capteurs ({capteurs.length})</h2>
-
-      {capteurs.length === 0 ? (
-        <p className="vide">Aucun capteur pour le moment.</p>
-      ) : (
-        <ul className="grille">
-          {capteurs.map((capteur) => (
-            <li key={capteur.id} className="carte">
-              <h3>{capteur.code}</h3>
-              <p><strong>Parcelle :</strong> {capteur.parcelle.nom}</p>
-              <p><strong>Humidité :</strong> {capteur.humidite} %</p>
-              <p><strong>Température :</strong> {capteur.temperature} °C</p>
-            </li>
-          ))}
-        </ul>
-      )}
+        </section>
+      </div>
     </div>
   );
 }

@@ -31,30 +31,65 @@ body {
 .navbar-titre {
   font-weight: bold;
   font-size: 1.2rem;
+  color: white;
+  text-decoration: none;
 }
 
 .navbar-liens {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.navbar-liens a {
+.lien-nav {
+  display: block;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
   color: white;
   text-decoration: none;
+  transition: background 0.2s;
 }
 
-.navbar-liens a:hover {
-  text-decoration: underline;
+.lien-nav:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Lien de la page affichée */
+.lien-nav.actif {
+  background: white;
+  color: var(--vert);
+  font-weight: 600;
 }
 
 .contenu {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 1.5rem;
+}
+
+/* Formulaire + liste : l'un sous l'autre sur mobile */
+.mise-en-page {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.zone-liste h2 {
+  margin-top: 0;
+}
+
+/* Grand écran : formulaire à gauche, liste à droite */
+@media (min-width: 900px) {
+  .mise-en-page {
+    grid-template-columns: 340px 1fr;
+  }
+
+  .mise-en-page .formulaire {
+    margin-bottom: 0;
+  }
 }
 
 h1 {
@@ -91,6 +126,16 @@ h1 {
   border: 1px solid var(--bordure);
   border-radius: 6px;
   font-size: 1rem;
+  font-family: inherit;
+  background: white;
+}
+
+/* Retour visuel quand on clique dans un champ */
+.champ input:focus,
+.champ select:focus {
+  outline: none;
+  border-color: var(--vert);
+  box-shadow: 0 0 0 3px rgba(47, 111, 62, 0.2);
 }
 
 .erreur {
@@ -147,6 +192,13 @@ h1 {
   border: 1px solid var(--bordure);
   border-radius: 8px;
   padding: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.carte:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .carte h3 {
@@ -227,4 +279,30 @@ h1 {
 
 .lien-carte:hover {
   text-decoration: underline;
+}
+
+/* Petit écran : navigation centrée et compacte */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .navbar-liens {
+    justify-content: center;
+  }
+
+  .navbar-liens {
+    gap: 0;
+  }
+
+  .lien-nav {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .contenu {
+    padding: 1rem;
+  }
 }
