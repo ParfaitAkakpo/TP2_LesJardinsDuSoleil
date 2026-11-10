@@ -150,7 +150,7 @@ export default async function CulturesPage({
           ) : (
             <ul className="grille">
               {cultures.map((culture) => {
-                // Employés pas encore affectés à CETTE culture
+                // Employés pas encore affectés à cette culture
                 const employesDisponibles = employes.filter(
                   (employe) =>
                     !culture.employes.some((affecte) => affecte.id === employe.id),

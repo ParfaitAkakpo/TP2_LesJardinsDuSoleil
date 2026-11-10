@@ -18,7 +18,7 @@ export default async function CapteursPage({
 }) {
   const { erreur, succes } = await searchParams;
 
-  // Seules les parcelles SANS capteur sont proposées dans la liste
+  // Seules les parcelles sans capteur sont proposées dans la liste
   const parcellesLibres = await prisma.parcelle.findMany({
     where: { capteur: { is: null } },
     orderBy: { nom: "asc" },

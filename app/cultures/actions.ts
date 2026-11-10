@@ -62,7 +62,7 @@ export async function createCulture(formData: FormData) {
     redirect("/cultures?erreur=employes-inexistants");
   }
 
-  // 5. Création : connect relie la culture à la parcelle ET aux employés
+  // 5. Création : connect relie la culture à la parcelle et aux employés
   try {
     await prisma.culture.create({
       data: {
@@ -110,7 +110,7 @@ export async function affecterEmployes(formData: FormData) {
   }
 
   try {
-    // connect AJOUTE les employés sans retirer ceux déjà affectés
+    // connect ajoute les employés sans retirer ceux déjà affectés
     await prisma.culture.update({
       where: { id: cultureId },
       data: {

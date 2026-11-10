@@ -106,6 +106,7 @@ Il démontre les trois types de relations :
 app/
 ├── layout.tsx            Navigation commune
 ├── page.tsx              Accueil
+├── components/           Navigation (lien de la page active)
 ├── parcelles/            Page + actions serveur
 ├── cultures/             Page + actions serveur
 ├── employes/             Page + actions serveur
