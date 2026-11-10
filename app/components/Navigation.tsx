@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "./Logo";
 
 const LIENS = [
   { href: "/", texte: "Accueil" },
@@ -18,7 +19,8 @@ export default function Navigation() {
   return (
     <nav className="navbar">
       <Link href="/" className="navbar-titre">
-        🌱 Les Jardins du Soleil
+        <Logo />
+        Les Jardins du Soleil
       </Link>
 
       <ul className="navbar-liens">

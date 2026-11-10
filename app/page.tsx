@@ -53,7 +53,7 @@ export default async function AccueilPage() {
         les capteurs au même endroit.
       </p>
 
-      <ul className="grille">
+      <ul className="grille grille-accueil">
         {sections.map((section) => (
           <li key={section.href} className="carte">
             <h3>{section.titre}</h3>

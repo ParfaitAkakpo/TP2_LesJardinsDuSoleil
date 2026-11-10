@@ -28,6 +28,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <Navigation />
         <main className="contenu">{children}</main>
+        <footer className="pied-de-page">
+          © 2026 Les Jardins du Soleil · TP2 Programmation avancée · Irénée
+          Parfait Akakpo
+        </footer>
       </body>
     </html>
   );
