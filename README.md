@@ -99,14 +99,16 @@ Il démontre les trois types de relations :
 - Validation des champs et messages d'erreur compréhensibles
   (aucune erreur Prisma brute affichée)
 - Page d'accueil avec compteurs, interface cohérente et responsive
+- Logo de la ferme (aussi utilisé comme icône d'onglet) et pied de page commun
 
 ## Structure du projet
 
 ```
 app/
-├── layout.tsx            Navigation commune
+├── layout.tsx            Mise en page commune (navigation, pied de page)
 ├── page.tsx              Accueil
-├── components/           Navigation (lien de la page active)
+├── icon.svg              Icône de l'onglet
+├── components/           Navigation (lien de la page active) et logo
 ├── parcelles/            Page + actions serveur
 ├── cultures/             Page + actions serveur
 ├── employes/             Page + actions serveur
